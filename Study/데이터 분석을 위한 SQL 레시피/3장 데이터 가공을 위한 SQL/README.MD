@@ -15,4 +15,10 @@
 - match_param : i(대소문자 무시), c(대소문자 구분)
 
 2) regexp_replace
-- 
+- 대상문자열에서 특정 문자열 찾아서 다른 문자열로 바꿔주는 기능
+
+![image](https://user-images.githubusercontent.com/88830472/135564075-e0b401bc-2185-47f6-b0bf-903c1acc694f.png)
+- source_char : 대상 문자열
+- pattern : 정규표현식 패턴
+- replace_string : 바꿔치기할 문자열
+- position : 문자열내에서 처음 시작 위치
