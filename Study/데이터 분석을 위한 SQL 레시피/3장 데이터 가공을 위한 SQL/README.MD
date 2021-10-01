@@ -22,3 +22,5 @@
 - pattern : 정규표현식 패턴
 - replace_string : 바꿔치기할 문자열
 - position : 문자열내에서 처음 시작 위치
+
+#### 정규식 주요 패턴
