@@ -63,3 +63,29 @@
 
 #### 3) add_months 함수를 통한 월 계산 가능
 - ex) add_months(sysdate,1) -> 현재 날짜에 한 달 더하기
+
+
+## 7강 하나의 테이블에 대한 조작하기
+
+### 1. 그룹의 특징 잡기
+
+#### 집약 함수 : 여러 레코드를 기반으로 하나의 값을 리턴해주는 함수 
+- ex) count, sum, avg 등
+
+- group by 구문을 사용한 쿼리에서는 group by 구문에 지정한 칼럼 or 집약 함수만 select 구문의 컬럼으로 지정할 수 있다.
+
+### 2. 그룹 내부의 순서
+
+- SQL의 테이블은 기본적으로 순서라는 개념이 없다. -> 윈도우 함수를 통해 다루면 된다.
+
+#### WINDOWING 절
+- 함수의 대상이 되는 행 기준의 범위를 지정한다.
+- ROWS : 행의 수를 기준으로 한 범위
+- RANGE : 값의 기준으로 한 범위
+
+예시
+- ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING : 앞의 한 행, 현재 행, 뒤의 한 행을 범위로 지정
+- RANGE BETWEEN 50 PRECEDING AND 150 FOLLOWING : 현재 행의 값 -50 ~ 현재 행의 값 + 150을 범위로 지정
+- RANGE UNBOUNDED PRECEDING : 첫 행 ~ 현재 행까지 지정
+- UNBOUNDED PRECEDING : 이전 행 전부
+- UNBOUNDED FOLLOWING : 이후 행 전부
