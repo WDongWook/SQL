@@ -89,3 +89,10 @@
 - RANGE UNBOUNDED PRECEDING : 첫 행 ~ 현재 행까지 지정
 - UNBOUNDED PRECEDING : 이전 행 전부
 - UNBOUNDED FOLLOWING : 이후 행 전부
+
+### 3. 세로 기반 데이터를 가로 기반으로 변환하기
+
+#### listagg 함수
+
+- listagg([칼럼명], [구분자]) within group(order by [정렬 칼럼명])
+- ex) listagg(product_id,',') within group(order by score product_id) : product_id를 배열에 집약하고 쉼표로 구분한다. 또한, product_id를 오름차순으로 정렬
