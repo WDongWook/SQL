@@ -96,3 +96,10 @@
 
 - listagg([칼럼명], [구분자]) within group(order by [정렬 칼럼명])
 - ex) listagg(product_id,',') within group(order by score product_id) : product_id를 배열에 집약하고 쉼표로 구분한다. 또한, product_id를 오름차순으로 정렬
+
+
+## 8강 여러 개의 테이블을 조작하기
+
+### 1. 여러 개의 테이블을 세로로 결합하기
+
+- UNION ALL 구문 대신 UNION DISTINCT 구문을 사용하면 데이터의 중복을 제외한 결과값을 얻을 수 있다. -> 다만, 계산 비용이 많이 들어간다.
