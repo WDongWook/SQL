@@ -1,6 +1,6 @@
-/* 1. ¿©·¯ °³ÀÇ Å×ÀÌºíÀ» ¼¼·Î·Î °áÇÕÇÏ±â */
+/* 1. ì—¬ëŸ¬ ê°œì˜ í…Œì´ë¸”ì„ ì„¸ë¡œë¡œ ê²°í•©í•˜ê¸° */
 
-/* 1-1. app1,app2 µ¥ÀÌÅÍ Å×ÀÌºí ¸¸µé±â */
+/* 1-1. app1,app2 ë°ì´í„° í…Œì´ë¸” ë§Œë“¤ê¸° */
 
 create table app2 (user_id varchar(255), name varchar(255), email varchar(255));
 create table app1 (user_id varchar(255), name varchar(255), phone varchar(255));
@@ -11,16 +11,16 @@ insert into app1 values('U002', 'Tanaka', '070-xxxx-xxxx');
 insert into app2 values('U001', 'Sato', 'sato@example.com');
 insert into app2 values('U002', 'Suzuki', 'suzuki@example.com');
 
-/* 1-2. UNION ALLÀ» ÀÌ¿ëÇÏ¿© Å×ÀÌºí ¼¼·Î·Î °áÇÕÇÏ±â */
+/* 1-2. UNION ALLì„ ì´ìš©í•˜ì—¬ í…Œì´ë¸” ì„¸ë¡œë¡œ ê²°í•©í•˜ê¸° */
 
 select 'apps1' as app_name, user_id,name, phone from app1
 union all
 select 'apps2' as app_name, user_id,name, email from app2;
 
 
-/* 2. ¿©·¯ °³ÀÇ Å×ÀÌºíÀ» °¡·Î·Î Á¤·ÄÇÏ±â */
+/* 2. ì—¬ëŸ¬ ê°œì˜ í…Œì´ë¸”ì„ ê°€ë¡œë¡œ ì •ë ¬í•˜ê¸° */
 
-/* 2-1. Ä«Å×°í¸® ¸¶½ºÅÍ,¸ÅÃâ,¼øÀ§ µ¥ÀÌÅÍ Å×ÀÌºí ¸¸µé±â */
+/* 2-1. ì¹´í…Œê³ ë¦¬ ë§ˆìŠ¤í„°,ë§¤ì¶œ,ìˆœìœ„ ë°ì´í„° í…Œì´ë¸” ë§Œë“¤ê¸° */
 
 create table mst_categories (category_id varchar(255), name varchar(255));
 create table category_sales (category_id varchar(255), sales number);
@@ -40,7 +40,7 @@ insert into sales_ranking values('2',1,'C001',30000);
 insert into sales_ranking values('2',2,'C002',20000);
 insert into sales_ranking values('2',3,'C003',10000);
 
-/* 2-2. ´Ü¼ø INNER JOIN ÅëÇÑ Å×ÀÌºí °áÇÕ */
+/* 2-2. ë‹¨ìˆœ INNER JOIN í†µí•œ í…Œì´ë¸” ê²°í•© */
 
 select m.*,r.rank,r.product_id,r.sales
 from mst_categories m join category_sales c 
@@ -49,10 +49,86 @@ join sales_ranking r
 on m.category_id = r.category_id
 order by m.category_id,m.name,r.rank;
 
-/* 2-3. ¸¶½ºÅÍ Å×ÀÌºíÀÇ Çà ¼ö¸¦ º¯°æÇÏÁö ¾Ê°í ¿©·¯ °³ÀÇ Å×ÀÌºíÀ» °¡·Î·Î Á¤·ÄÇÏ±â */
+/* 2-3. ë§ˆìŠ¤í„° í…Œì´ë¸”ì˜ í–‰ ìˆ˜ë¥¼ ë³€ê²½í•˜ì§€ ì•Šê³  ì—¬ëŸ¬ ê°œì˜ í…Œì´ë¸”ì„ ê°€ë¡œë¡œ ì •ë ¬í•˜ê¸° */
 
 select m.category_id,m.name,s.sales,r.product_id as top_sale_product
 from mst_categories m left join category_sales s
 on m.category_id = s.category_id
 left join sales_ranking r
 on m.category_id = r.category_id and r.rank = 1;
+
+
+/* 3. ì¡°ê±´ í”Œë˜ê·¸ë¥¼ 0ê³¼ 1ë¡œ í‘œí˜„í•˜ê¸° */
+
+/* 3-1. í…Œì´ë¸” ë§Œë“¤ê¸° */
+
+create table mst_card(user_id varchar(255), card_number varchar(255));
+create table purchase_log(purchase_id varchar(255), user_id varchar(255), amount number(5), stamp varchar(255));
+
+insert into mst_card values('U001','1234-xxxx-xxxx-xxxx');
+insert into mst_card values('U002','');
+insert into mst_card values('U003','5678-xxxx-xxxx-xxxx');
+
+insert into purchase_log values('10001','U001',200,'2017-01-30 10:00:00');
+insert into purchase_log values('10002','U001',500,'2017-02-10 10:00:00');
+insert into purchase_log values('10003','U001',200,'2017-02-12 10:00:00');
+insert into purchase_log values('10004','U002',800,'2017-03-01 10:00:00');
+insert into purchase_log values('10005','U002',400,'2017-03-02 10:00:00');
+
+/* 3-2. ì¹´ë“œ ë“±ë¡ê³¼ êµ¬ë§¤ ì´ë ¥ ìœ ë¬´ë¥¼ 0&1 í”Œë˜ê·¸ë¡œ ë‚˜íƒ€ë‚´ëŠ” ì¿¼ë¦¬ */
+
+select m.user_id, count(p.user_id) as purchase_count, case when m.card_number is not null then 1 else 0 end as has_card,sign(count(p.user_id)) as has_purchased
+from mst_card m left join purchase_log p
+on m.user_id = p.user_id
+group by m.user_id,m.card_number
+order by user_id;
+
+
+/* 4. ê³„ì‚°í•œ í…Œì´ë¸”ì— ì´ë¦„ ë¶™ì—¬ ì¬ì‚¬ìš©í•˜ê¸° */
+
+create table product_sales(category_name varchar(255), product_id varchar(255), sales number(6));
+
+insert into product_sales values('dvd','D001',50000);
+insert into product_sales values('dvd','D002',20000);
+insert into product_sales values('dvd','D003',10000);
+insert into product_sales values('cd','C001',30000);
+insert into product_sales values('cd','C002',20000);
+insert into product_sales values('cd','C003',10000);
+insert into product_sales values('book','B001',20000);
+insert into product_sales values('book','B002',15000);
+insert into product_sales values('book','B003',10000);
+insert into product_sales values('book','B004',5000);
+
+/* 4-1. ì¹´í…Œê³ ë¦¬ë³„ ìˆœìœ„ ì¶”ê°€í•˜ê¸° */
+
+select category_name, product_id, sales, rank() over(partition by category_name order by sales) as rank
+from product_sales;
+
+/* 4-2. ì¹´í…Œê³ ë¦¬ë“¤ ìˆœìœ„ì—ì„œ ìœ ë‹ˆí¬í•œ ìˆœìœ„ ëª©ë¡ì„ ê³„ì‚°í•˜ëŠ” ì¿¼ë¦¬ */
+
+select *
+from(select distinct rank() over(partition by category_name order by sales) as rank
+from product_sales)
+order by rank;
+
+/* 4-3. ì¹´í…Œê³ ë¦¬ë“¤ì˜ ìˆœìœ„ë¥¼ íš¡ë‹¨ì ìœ¼ë¡œ ì¶œë ¥í•˜ëŠ” ì¿¼ë¦¬ */ 
+
+create table product_rank as select category_name, product_id, sales, rank() over(partition by category_name order by sales desc) as rank
+from product_sales;
+
+create table rank_df as select *
+from(select distinct rank() over(partition by category_name order by sales desc) as rank
+from product_sales)
+order by rank;
+
+select r.rank, d.category_name as dvd, d.sales as dvd_sales, c.category_name as cd, c.sales as cd_sales,b.category_name as book, b.sales as book_sales
+from rank_df r left join (select *
+from product_rank 
+where category_name = 'dvd') d
+on r.rank = d.rank left join (select *
+from product_rank 
+where category_name = 'cd') c 
+on r.rank = c.rank left join (select *
+from product_rank 
+where category_name = 'book') b
+on r.rank = b.rank;
